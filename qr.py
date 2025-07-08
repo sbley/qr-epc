@@ -47,5 +47,4 @@ def _create_qr_code(data):
     qr.add_data(data)
     qr.make(fit=True)
 
-    img = qr.make_image(image_factory=StyledPilImage, module_drawer=SquareModuleDrawer())
-    return img
+    return qr.make_image(image_factory=StyledPilImage, module_drawer=SquareModuleDrawer())
