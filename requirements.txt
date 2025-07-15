@@ -1,3 +1,5 @@
 qrcode[pil]
 pydantic
 fastmcp
+fastapi
+uvicorn

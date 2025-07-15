@@ -1,3 +1,4 @@
+from fastapi import FastAPI
 from fastmcp import FastMCP
 from fastmcp.utilities.types import Image
 from mcp.types import ImageContent
@@ -5,7 +6,10 @@ from mcp.types import ImageContent
 from qr import generate_epc_qr_code, PaymentInfo
 
 # Initialize the MCP server
-mcp = FastMCP('sbley-qr-code')
+mcp = FastMCP('sbley-qr-code', stateless_http=True)
+
+app = FastAPI(title="EPC QR Code Generator",)
+app.mount("/epc-qr-code", mcp.streamable_http_app())
 
 @mcp.tool(name="generate_epc_qr_code")
 def epc_qr_code(payment_info: PaymentInfo) -> ImageContent:
@@ -28,4 +32,4 @@ def _encode_image(image) -> ImageContent:
 
 
 if __name__ == '__main__':
-    mcp.run(transport='stdio')
+    mcp.run(transport="streamable-http")
